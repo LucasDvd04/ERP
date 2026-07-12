@@ -3,12 +3,17 @@ from products.models import Product
 from products.serializers import ProductSerializer
 
 
-class ProductListView(generics.ListCreateAPIView):
+class ProductListView(generics.ListAPIView):
     model = Product
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+class ProductCreateView(generics.CreateAPIView):
+    model = Product
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class ProductDetailView(generics.RetrieveAPIView):
     model = Product
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
