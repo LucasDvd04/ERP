@@ -13,7 +13,7 @@ function Login(){
                         <h1 className='text-3xl text-center'> TecnoERP</h1>
                     </div>
                 <div>
-                    <h1 className='text-3xl text-center'>Bem-Vindo</h1>
+                    <h1 className='text-2xl text-center'>Bem-Vindo</h1>
                     <h1 className='text-xs text-gray-500 text-center'>Faça login para acessar o sistema</h1>
                 </div>
                 
