@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class ProductListView(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     model = Product
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
