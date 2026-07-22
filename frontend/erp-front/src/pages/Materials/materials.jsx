@@ -1,11 +1,16 @@
+import { useEffect, useState } from "react";
 import { RiSearchLine,RiAddLine   } from "@remixicon/react";
 import Sidebar from "../../components/_sidebar";
+import axios from 'axios'
 
 function Materials(){
     const [search, SetSearch] = useState({
         arg: "",
         
     });
+
+    
+
     return (
         <>
             <div className="flex bg-primary">
