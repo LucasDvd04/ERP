@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { RiSearchLine,RiAddLine   } from "@remixicon/react";
 import Sidebar from "../../components/_sidebar";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Products(){
     const [search, setSearch] = useState({
         arg: "",
         
     });
+    const navigate = useNavigate()
 
     const [products, setProducts] = useState([]);
     const [listProd , setListProd] = useState([])
@@ -38,7 +40,7 @@ function Products(){
                                 )
                             } />
                             <button className=" flex-auto flex items-center justify-center hover:bg-primary bg-secondary rounded-r-full cursor-pointer"><RiSearchLine color="rgba(255,255,255,1) " /></button>
-                            <div className="flex flex-auto rounded-full items-center justify-center ml-1 p-2 bg-green-500 cursor-pointer hover:bg-green-200">+Novo</div>
+                            <div className="flex flex-auto rounded-full items-center justify-center ml-1 p-2 bg-green-500 cursor-pointer hover:bg-green-200" onClick={()=> navigate('/products/new')}>+Novo</div>
                         
                         </div>
                     </div>

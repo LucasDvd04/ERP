@@ -9,7 +9,7 @@ function Product(){
                 <Sidebar/>
                 <div className="content flex flex-col flex-auto p-4">
                     <div className="w-full h-1/12 text-white flex flex-col ">
-                        <h1 className="text-3xl ">Products</h1>
+                        <h1 className="text-3xl ">New Product</h1>
                     </div>
                     <div className="w-full h-full flex flex-wrap gap-2 bg-secondary rounded-2xl p-10 text-white">
                        
