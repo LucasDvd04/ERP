@@ -1,13 +1,23 @@
 import { RiSearchLine,RiAddLine, RiImageAddFill   } from "@remixicon/react";
-import Sidebar from "../../components/_sidebar";
+import { useState } from "react";
 
 
 function Product(){
+
+    const [ product, setProduct] = useState({
+        id_external:'',
+        name_internal:'',
+        name_external:'',
+        description:'',
+        sale_internal:'',
+        sale_external:'',
+    })
+
+    console.log(product)
+
     return (
         <>
-            <div className="flex bg-primary">
-                <Sidebar/>
-                <div className="content flex flex-col flex-auto p-4">
+                
                     <div className="w-full h-1/12 text-white flex flex-col ">
                         <h1 className="text-3xl ">New Product</h1>
                     </div>
@@ -24,31 +34,49 @@ function Product(){
                         <div className="flex gap-2 flex-wrap">
                             <div className="flex flex-col gap-1">
                             ID External
-                            <input type="text" className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="IFD123"/>
+                            <input type="text" className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="IFD123" 
+                            onChange={(e)=> setProduct({ ...product, id_external: e.target.value })}
+                            />
                         </div>
                         <div className="flex flex-col gap-1">
                             Name Internal
-                            <input type="text" className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="PORK COMPLETE"/>
+                            <input type="text" className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="PORK COMPLETE"
+                            onChange={(e) => setProduct({ ...product, name_internal: e.target.value})}
+                            />
                         </div>
                         <div className="flex flex-col gap-1">
                             Name External
-                            <input type="text" className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="PORK WITH FRIES"/>
+                            <input type="text" className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="PORK WITH FRIES"
+                            onChange={(e)=> setProduct({
+                                ...product, name_external: e.target.value
+                            })}/>
                         </div>
                         </div>
 
                         <div className="flex flex-col gap-1 flex-wrap">
                             Description
-                            <textarea  className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="Write the description of product here....."></textarea>
+                            <textarea  className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="Write the description of product here....."
+                            onChange={(e) => setProduct({
+                                ...product, description: e.target.value
+                            })}
+                            ></textarea>
                         </div>
 
                         <div name='value' className="flex gap-2 flex-wrap">
                         <div className="flex flex-col gap-1">
                             Sale Internal
-                            <input type="number" className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="00.00"/>
+                            <input type="number" className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="00.00"
+                            onChange={(e) => setProduct({
+                                ...product, sale_internal: e.target.value
+                            })}/>
                         </div>
                         <div className="flex flex-col gap-1">
                             Sale External
-                            <input type="number" className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="00.00"/>
+                            <input type="number" className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="00.00"
+                            onChange={(e) => setProduct({
+                                ...product, sale_external: e.target.value
+                            })}
+                            />
                         </div>
 
                         </div>
@@ -62,8 +90,7 @@ function Product(){
 
 
                     </div>
-                </div>
-            </div>
+
         </>
     )
 }

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { RiSearchLine,RiAddLine   } from "@remixicon/react";
-import Sidebar from "../../components/_sidebar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -24,9 +23,6 @@ function Products(){
     console.log(listProd)
     return (
         <>
-            <div className="flex bg-primary">
-                <Sidebar/>
-                <div className="content flex flex-col flex-auto gap-4 p-4">
                     <div className="w-full h-2/12 text-white flex flex-col gap-3">
                         <h1 className="text-3xl ">Products</h1>
                         <div className="flex ">
@@ -48,13 +44,16 @@ function Products(){
 
                         <div className="w-full">
                             <table className="w-full">
-                            <tr className="" >
+                            <thead>
+                                <tr className="" >
                                 <th>ID</th>
                                 <th>NAME</th>
                                 <th>DESCRIPTION</th>
                                 <th>VALUE</th>
-                            </tr>
-                            {
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
                                 products.map((product, index) => (
                                     <tr className={`text-center cursor-pointer  hover:border-b hover:border-amber-50 ${index % 2 === 0 ? 'bg-primary' : 'bg-secondary'}`} 
                                         key={product.id}  key={product.id} onClick={
@@ -71,12 +70,11 @@ function Products(){
                                     </tr>
                                 ))
                             }
+                            </tbody>
                         </table>
                         </div>
                     </div>
-                </div>
-            </div>
-            
+
         </>
     )
 }

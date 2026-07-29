@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { RiSearchLine,RiAddLine, RiImageAddFill,RiDeleteBinFill,RiPencilFill   } from "@remixicon/react";
-import Sidebar from "../../components/_sidebar";
 
 
 function Sheet(){
     return (
         <>
-            <div className="flex flex-auto bg-primary">
-                <Sidebar/>
-                <div className="content flex flex-col flex-auto p-4">
+            
                     <div className="w-full  text-white flex flex-col ">
                         <h1 className="text-3xl ">Technical Sheet</h1>
                         <div className="flex flex-1">
@@ -100,8 +97,8 @@ function Sheet(){
 
 
                     </div>
-                </div>
-            </div>
+   
+
         </>
     )
 }
