@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../App.css'
-import Sidebar from '../components/_sidebar';
 
 function Home(){
+
     return(
         <>
-        <Sidebar/>
+        <h1>Hello</h1>
         </>
     )
 }

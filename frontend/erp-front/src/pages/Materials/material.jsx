@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { RiSearchLine,RiAddLine, RiImageAddFill   } from "@remixicon/react";
-import Sidebar from "../../components/_sidebar";
 
 
 function Material(){
     return (
         <>
-            <div className="flex bg-primary">
-                <Sidebar/>
+
                 <div className="content flex flex-col flex-auto p-4">
                     <div className="w-full h-1/12 text-white flex flex-col ">
                         <h1 className="text-3xl ">Materials</h1>
@@ -60,7 +58,7 @@ function Material(){
 
                     </div>
                 </div>
-            </div>
+        
         </>
     )
 }

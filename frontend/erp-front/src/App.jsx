@@ -9,25 +9,34 @@ import Materials from './pages/Materials/materials'
 import Sheets from './pages/Sheets/sheets'
 import Material from './pages/Materials/material'
 import Sheet from './pages/Sheets/sheet'
+import ProtectedRoute from './components/logedRoute'
+import { NotFound } from './components/notFound'
+import LogedLayout from './pages/Layout/logedLayout'
 
 
 function App() {
 
+  const loged = localStorage.getItem("@access")
   return (
 
-    <BrowserRouter>
       <Routes>
         <Route path='/' element={<Login/>} />
-        <Route path='/home' element={<Home/>}/>
-        <Route path='/products' element={<Products/>}/>
-        <Route path='/products/new' element={<Product/>}/>
-        <Route path='/materials' element={<Materials/>}/>
-        <Route path='/materials/new' element={<Material/>}/>
-        <Route path='/sheets' element={<Sheets/>}/>
-        <Route path='/sheets/new' element={<Sheet/>}/>
-      </Routes>
-    </BrowserRouter>
 
+        <Route element={<ProtectedRoute isAuth={loged}/>}>
+          <Route element={<LogedLayout/>}>
+            <Route path='/home' element={<Home/>}/>
+            <Route path='/products' element={<Products/>}/>
+            <Route path='/products/new' element={<Product/>}/>
+            <Route path='/materials' element={<Materials/>}/>
+            <Route path='/materials/new' element={<Material/>}/>
+            <Route path='/sheets' element={<Sheets/>}/>
+            <Route path='/sheets/new' element={<Sheet/>}/>
+          </Route>
+        </Route>
+
+        <Route path="*" element={<NotFound/>} />
+        
+      </Routes>
   )
 }
 
