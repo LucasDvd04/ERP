@@ -1,19 +1,33 @@
 import { RiSearchLine,RiAddLine, RiImageAddFill   } from "@remixicon/react";
-import { useState } from "react";
+import authApi from "../../services/api";
+import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 
 function Product(){
-
+    const navigate = useNavigate();
     const [ product, setProduct] = useState({
         id_external:'',
         name_internal:'',
         name_external:'',
         description:'',
-        sale_internal:'',
-        sale_external:'',
+        sale_price_internal:'',
+        sale_price_external:'',
     })
-
     console.log(product)
+
+    async function saveProduct(){
+        try {
+            const response = await authApi.post('products/create/', product)
+            const res = response.data
+
+            if(res){
+                alert('Dados salvos com sucesso.')
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <>
@@ -67,22 +81,22 @@ function Product(){
                             Sale Internal
                             <input type="number" className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="00.00"
                             onChange={(e) => setProduct({
-                                ...product, sale_internal: e.target.value
+                                ...product, sale_price_internal: e.target.value
                             })}/>
                         </div>
                         <div className="flex flex-col gap-1">
                             Sale External
                             <input type="number" className="bg-primary outline-none border border-primary focus:border-b-gray-300" placeholder="00.00"
                             onChange={(e) => setProduct({
-                                ...product, sale_external: e.target.value
+                                ...product, sale_price_external: e.target.value
                             })}
                             />
                         </div>
 
                         </div>
                         <div className="flex justify-end  gap-2 pt-5">
-                                <button className="bg-green-500 py-2 px-5 rounded-full hover:bg-primary cursor-pointer">Salvar</button>
-                                <button className="bg-red-500 py-2 px-5 rounded-full hover:bg-primary cursor-pointer">Voltar</button>
+                                <button className="bg-green-500 py-2 px-5 rounded-full hover:bg-primary cursor-pointer" onClick={saveProduct}>Salvar</button>
+                                <button className="bg-red-500 py-2 px-5 rounded-full hover:bg-primary cursor-pointer" onClick={()=> navigate(-1)}>Voltar</button>
                         </div>
 
                     </div>
