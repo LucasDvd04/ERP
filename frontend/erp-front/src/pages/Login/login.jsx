@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { RiDatabase2Fill }  from '@remixicon/react'
 
-import '../App.css'
-import Sidebar from '../components/_sidebar';
+import '../../App.css'
+import authApi from '../../services/api';
 import axios from 'axios';
 import { replace, useNavigate } from 'react-router-dom';
 
@@ -35,7 +35,7 @@ function Login(){
             return;
         }
         try{
-            const response = await axios.post("http://127.0.0.1:8000/api/token/",data)
+            const response = await authApi.post("accounts/token/",data)
             const res = response.data
             localStorage.setItem("@access", res.access)
             localStorage.setItem("@refresh", res.refresh)

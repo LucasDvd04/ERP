@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { RiSearchLine,RiAddLine   } from "@remixicon/react";
-import axios from "axios";
+import authApi from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
 function Products(){
+    const navigate = useNavigate()
+    const [products, setProducts] = useState([]);
+    const [listProd , setListProd] = useState([])
     const [search, setSearch] = useState({
         arg: "",
         
     });
-    const navigate = useNavigate()
-
-    const [products, setProducts] = useState([]);
-    const [listProd , setListProd] = useState([])
-
-    useEffect(() => {
-        axios.get("http://127.0.0.1:8000/products/list/")
-            .then(response => setProducts(response.data))
-            .catch(err => console.log("Erro ao buscar dados:", err));
-    }, []);
 
 
-    console.log(listProd)
+useEffect(() => {
+    const fetchProducts = async () => {
+        try {
+            const response = await authApi.get('products/list/');
+            setProducts(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    fetchProducts();
+}, []);
+
     return (
         <>
                     <div className="w-full h-2/12 text-white flex flex-col gap-3">
