@@ -7,47 +7,56 @@ import axios from 'axios';
 import { replace, useNavigate } from 'react-router-dom';
 
 function Login(){
-    const loged = localStorage.getItem("@access")
+
     const navigate = useNavigate();
 
-    useEffect(
-        () => {
-            if(loged){
-                navigate('/home', {replace: true})
-            }
-        },[]
-    )
 
     const [credentials, setCredentials] = useState({
         username: '',
         password: ''
     })
 
+    
+    useEffect(
+        () => {
+            const loged = localStorage.getItem("@access")
+            if(loged){
+                navigate('/home', {replace: true})
+            }
+        },[]
+    )
 
-    const handleSubmit = (e) => {
-        e.preventDefault(); // Impede o reload da página
-        logar(credentials);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const success = await logar(credentials);
+        if (success) {
+            console.log("Redirecionando...");
+            // navigate("/home", { replace: true });
+            window.location.reload();
+        }
     };
 
     const logar = async (data) => {
-        if (!credentials.username || !credentials.password) {
+        if (!data.username || !data.password) {
             alert("Preencha usuário e senha");
-            return;
+            return false;
         }
-        try{
-            const response = await authApi.post("accounts/token/",data)
-            const res = response.data
-            localStorage.setItem("@access", res.access)
-            localStorage.setItem("@refresh", res.refresh)
-            window.location.reload()
-        }
-        catch(err){
-            if(err.response && err.response.status === 401){
-                var display = document.getElementById('err');
-                display.innerHTML = "<p>User or Password not find</p>";
-            }else{        
-                console.log(err)
+
+        try {
+            const response = await authApi.post("accounts/token/", data);
+
+            localStorage.setItem("@access", response.data.access);
+            localStorage.setItem("@refresh", response.data.refresh);
+
+            return true;
+        } catch (err) {
+            if (err.response?.status === 401) {
+                document.getElementById("err").innerHTML =
+                    "<p>User or Password not found</p>";
             }
+
+            return false;
         }
     };
 
@@ -71,7 +80,7 @@ function Login(){
                         })}/>
                     </div>
                     <div >
-                        <input type="password" placeholder='Password' className='border-b border-b-gray-300 outline-none text-center  focus:border-b-primary'
+                        <input type="password" autoComplete='current_password' placeholder='Password' className='border-b border-b-gray-300 outline-none text-center  focus:border-b-primary'
                         onChange={(e) => setCredentials({
                             ...credentials, password: e.target.value
                         })}/>
@@ -85,8 +94,7 @@ function Login(){
                             
                         </div>
                         <button className='flex p-1 items-center justify-center bg-secondary text-white  rounded-full hover:bg-primary'
-                        // onClick={()=> logar(credentials)}
-                        type='submit'
+
                         >Entrar</button>
                           
                         

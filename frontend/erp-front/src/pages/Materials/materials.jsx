@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { RiSearchLine,RiAddLine   } from "@remixicon/react";
-import axios from "axios";
+import authApi from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
 function Materials(){
@@ -10,17 +10,25 @@ function Materials(){
     });
     const navigate = useNavigate()
 
-    const [products, setProducts] = useState([]);
-    const [listProd , setListProd] = useState([])
+    const [materials, setMaterials] = useState([]);
+    const [listMaterials , setlistMaterials] = useState([])
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8000/products/list/")
-            .then(response => setProducts(response.data))
-            .catch(err => console.log("Erro ao buscar dados:", err));
+        const fetchMaterials = async () => {
+            try {
+                const response = await authApi.get('materials/list/');
+                setMaterials(response.data);
+            } catch (err) {
+                   refreshAccess(localStorage.getItem("@refresh"));
+                   fetchProducts()
+        }
+        
+    };
+
+    fetchMaterials();
     }, []);
 
-
-    console.log(listProd)
+    console.log(materials)
     return (
         <>
                     <div className="w-full h-2/12 text-white flex flex-col gap-3">
@@ -36,7 +44,7 @@ function Materials(){
                                 )
                             } />
                             <button className=" flex-auto flex items-center justify-center hover:bg-primary bg-secondary rounded-r-full cursor-pointer"><RiSearchLine color="rgba(255,255,255,1) " /></button>
-                            <div className="flex flex-auto rounded-full items-center justify-center ml-1 p-2 bg-green-500 cursor-pointer hover:bg-green-200" onClick={()=> navigate('/products/new')}>+Novo</div>
+                            <div className="flex flex-auto rounded-full items-center justify-center ml-1 p-2 bg-green-500 cursor-pointer hover:bg-green-200" onClick={()=> navigate('/materials/new')}>+Novo</div>
                         
                         </div>
                     </div>
@@ -49,24 +57,24 @@ function Materials(){
                                 <th>ID</th>
                                 <th>NAME</th>
                                 <th>DESCRIPTION</th>
-                                <th>VALUE</th>
+                                <th>PACKAGE</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                products.map((product, index) => (
+                                materials.map((product, index) => (
                                     <tr className={`text-center cursor-pointer  hover:border-b hover:border-amber-50 ${index % 2 === 0 ? 'bg-primary' : 'bg-secondary'}`} 
-                                        key={product.id}  key={product.id} onClick={
+                                        key={product.id}  onClick={
                                     () => console.log("apertado")
                                     } >
                                         <td>{product.id}</td>
-                                        <td>{product.name_internal}</td>
+                                        <td>{product.name}</td>
                                          <td>
                                             {product.description.length > 30
                                             ? `${product.description.slice(0, 30)}...`
                                             : product.description}
                                         </td>
-                                        <td>R${product.sale_price_internal}</td>                                    
+                                        <td>{product.pack_quantity}</td>                                    
                                     </tr>
                                 ))
                             }
