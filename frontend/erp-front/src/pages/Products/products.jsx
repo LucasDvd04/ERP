@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { RiSearchLine,RiAddLine   } from "@remixicon/react";
 import authApi from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import refreshAccess from "../../services/refresh";
 
 function Products(){
     const navigate = useNavigate()
@@ -20,7 +21,11 @@ useEffect(() => {
             setProducts(response.data);
         } catch (err) {
             console.log(err);
+            refreshAccess(localStorage.getItem("@refresh"));
+            fetchProducts()
         }
+  
+
     };
 
     fetchProducts();
@@ -61,8 +66,8 @@ useEffect(() => {
                                 {
                                 products.map((product, index) => (
                                     <tr className={`text-center cursor-pointer  hover:border-b hover:border-amber-50 ${index % 2 === 0 ? 'bg-primary' : 'bg-secondary'}`} 
-                                        key={product.id}  key={product.id} onClick={
-                                    () => console.log("apertado")
+                                        key={product.id}  onClick={
+                                    () => navigate(`/products/${product.id}`)
                                     } >
                                         <td>{product.id}</td>
                                         <td>{product.name_internal}</td>
