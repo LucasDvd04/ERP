@@ -1,13 +1,16 @@
-import { RiSearchLine,RiAddLine, RiImageAddFill   } from "@remixicon/react";
+import {RiImageAddFill, RiDeleteBin2Fill   } from "@remixicon/react";
 import authApi from "../../services/api";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
+import refreshAccess from "../../services/refresh";
+import DeleteConfirm from "../../components/_deleteConfirm";
 
 
 function ProductDetails() {
     const {id} = useParams();
 
     const navigate = useNavigate();
+    const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
     const [ product, setProduct] = useState({
         id_external:'',
         name_internal:'',
@@ -38,12 +41,13 @@ function ProductDetails() {
         };
         fetchDetail();
     }, [])
+ 
 
     console.log(product)
 
     async function saveProduct(){
         try {
-            const response = await authApi.post('products/create/', product)
+            const response = await authApi.put(`products/update/${id}/`, product)
             const res = response.data
 
             if(res){
@@ -51,6 +55,8 @@ function ProductDetails() {
             }
         } catch (error) {
             console.log(error)
+            refreshAccess(localStorage.getItem("@refresh"));
+            saveProduct()
         }
     }
 
@@ -60,10 +66,12 @@ function ProductDetails() {
                     <div className="w-full h-1/12 text-white flex flex-col ">
                         <h1 className="text-3xl ">New Product</h1>
                     </div>
-                    <div className="w-full h-full flex flex-wrap gap-2 bg-secondary rounded-2xl p-10 text-white">
-                       
+                    <div className=" relative w-full h-full flex flex-wrap gap-2 bg-secondary rounded-2xl p-10 text-white">
+                        <div title='Delete' className="absolute top-0 right-0 border bg-red-500 m-2 rounded-full p-4 flex justify-center items-center hover:bg-primary cursor-pointer" onClick={()=> setIsDeleteConfirmOpen(!isDeleteConfirmOpen)}>
+                        <RiDeleteBin2Fill size={24} color="rgba(255,255,255,1)" />
+                       </div>
                         <div className="l_side flex flex-1 items-center justify-center ">
-                            <div className="bg-primary  flex items-center justify-center rounded-full p-8 hover:bg-green-300 cursor-pointer">
+                            <div className="bg-primary  flex items-center justify-center rounded-full p-8 hover:bg-green-300 cursor-pointer" >
                             <RiImageAddFill size={72} color="rgba(255,255,255,1)" />
                             </div>
                         </div>
@@ -126,10 +134,10 @@ function ProductDetails() {
 
                     </div>
 
-
-
                     </div>
 
+                   <DeleteConfirm url={`products/delete/${id}/`} isOpen={isDeleteConfirmOpen} setIsDeleteConfirmOpen={setIsDeleteConfirmOpen}/>
+                                            
         </>
     
 )
