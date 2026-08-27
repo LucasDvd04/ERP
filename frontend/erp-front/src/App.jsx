@@ -12,7 +12,8 @@ import Sheet from './pages/Sheets/sheet'
 import ProtectedRoute from './components/logedRoute'
 import { NotFound } from './components/notFound'
 import LogedLayout from './pages/Layout/logedLayout'
-import ProductDetails from './pages/Products/[id}'
+import ProductDetails from './pages/Products/[id]'
+import MaterialDetails from './pages/Materials/[id]'
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Route path='/products/:id' element={<ProductDetails/>}/>
             <Route path='/materials' element={<Materials/>}/>
             <Route path='/materials/new' element={<Material/>}/>
+            <Route path='/materials/:id' element={<MaterialDetails/>}/>
             <Route path='/sheets' element={<Sheets/>}/>
             <Route path='/sheets/new' element={<Sheet/>}/>
           </Route>

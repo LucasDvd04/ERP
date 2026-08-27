@@ -20,7 +20,7 @@ function Materials(){
                 setMaterials(response.data);
             } catch (err) {
                    refreshAccess(localStorage.getItem("@refresh"));
-                   fetchProducts()
+                   fetchMaterials()
         }
         
     };
@@ -62,19 +62,19 @@ function Materials(){
                             </thead>
                             <tbody>
                                 {
-                                materials.map((product, index) => (
+                                materials.map((material, index) => (
                                     <tr className={`text-center cursor-pointer  hover:border-b hover:border-amber-50 ${index % 2 === 0 ? 'bg-primary' : 'bg-secondary'}`} 
-                                        key={product.id}  onClick={
-                                    () => console.log("apertado")
+                                        key={material.id}   onClick={
+                                    () => navigate(`/materials/${material.id}`)
                                     } >
-                                        <td>{product.id}</td>
-                                        <td>{product.name}</td>
+                                        <td>{material.id}</td>
+                                        <td>{material.name}</td>
                                          <td>
-                                            {product.description.length > 30
-                                            ? `${product.description.slice(0, 30)}...`
-                                            : product.description}
+                                            {material.description.length > 30
+                                            ? `${material.description.slice(0, 30)}...`
+                                            : material.description}
                                         </td>
-                                        <td>{product.pack_quantity}</td>                                    
+                                        <td>{material.pack_quantity}</td>                                    
                                     </tr>
                                 ))
                             }
