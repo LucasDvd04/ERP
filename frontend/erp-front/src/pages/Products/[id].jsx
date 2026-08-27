@@ -128,8 +128,8 @@ function ProductDetails() {
 
                         </div>
                         <div className="flex justify-end  gap-2 pt-5">
-                                <button className="bg-green-500 py-2 px-5 rounded-full hover:bg-primary cursor-pointer" onClick={saveProduct}>Salvar</button>
-                                <button className="bg-red-500 py-2 px-5 rounded-full hover:bg-primary cursor-pointer" onClick={()=> navigate(-1)}>Voltar</button>
+                                <button className="bg-green-500 py-2 px-5 rounded-full hover:bg-primary cursor-pointer" onClick={saveProduct}>Save</button>
+                                <button className="bg-red-500 py-2 px-5 rounded-full hover:bg-primary cursor-pointer" onClick={()=> navigate(-1)}>Return</button>
                         </div>
 
                     </div>

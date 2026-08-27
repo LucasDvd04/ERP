@@ -1,8 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RiSearchLine,RiAddLine, RiImageAddFill   } from "@remixicon/react";
+import { useNavigate } from "react-router-dom";
+import authApi from "../../services/api";
 
 
 function Material(){
+    const navigate = useNavigate()
+    const [supplier, setSupplier] = useState({})
+
+    useEffect(
+        () => {
+            const fetchSuppliers = async () => {
+               try{
+                    const response = await authApi.get(`materials/supplier/`);
+                    setSupplier(response.data)
+               }catch(err){
+                console.log(err)
+               }
+            };
+            fetchSuppliers();
+        },[]
+    )
+
+    console.log(supplier)
+
+
     return (
         <>
 
@@ -28,9 +50,9 @@ function Material(){
                             <div className="flex flex-col gap-1">
                             supplier
                             <select className="bg-primary outline-none border border-primary focus:border-b-gray-300" >
-                                <option>supplier 1</option>
-                                <option>supplier 2</option>
-                                <option>supplier 3</option>
+                                {supplier.map((item) => (
+                                    <option key={item.id} value={item.id}>{item.name}</option>
+                                ))}
                             </select>
                             </div>
                             
@@ -48,8 +70,8 @@ function Material(){
 
                         </div>
                         <div className="flex justify-end  gap-2 pt-5">
-                                <button className="bg-green-500 py-2 px-5 rounded-full hover:bg-primary cursor-pointer">Salvar</button>
-                                <button className="bg-red-500 py-2 px-5 rounded-full hover:bg-primary cursor-pointer">Voltar</button>
+                                <button className="bg-green-500 py-2 px-5 rounded-full hover:bg-primary cursor-pointer" onClick={() => console.log("salvo")}>Save</button>
+                                <button className="bg-red-500 py-2 px-5 rounded-full hover:bg-primary cursor-pointer" onClick={()=> navigate(-1)}>Return</button>
                         </div>
 
                     </div>
